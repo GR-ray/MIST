@@ -1,0 +1,15 @@
+model:
+  network:
+    name: MISTNet
+
+dataset:
+  name: MIST
+  root: ./data/MIST
+  num_inputs: 5
+  img_size: [ 384, 384 ]
+  frame_padding: False
+
+test:
+  exp_root: ./results/MISTNet_MIST
+  num_workers: 16
+  checkpoint: ./results/MISTNet_MIST/checkpoints/MISTNet_MIST.pth

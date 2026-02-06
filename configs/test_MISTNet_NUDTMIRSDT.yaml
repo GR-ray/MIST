@@ -1,0 +1,13 @@
+model:
+  network:
+    name: MISTNet
+
+dataset:
+  name: NUDT-MIRSDT
+  root: ./data/NUDT-MIRSDT
+  full_supervision: True
+
+test:
+  exp_root: ./results/MISTNet_NUDTMIRSDT
+  num_workers: 16
+  checkpoint: ./results/MISTNet_NUDTMIRSDT/checkpoints/MISTNet_NUDTMIRSDT.pth

@@ -1,0 +1,50 @@
+model:
+  network:
+    name: MISTNet
+  optimizer:
+    type: AdamW
+    init_lr: !!float 5e-4
+    betas: [ 0.9, 0.999 ]
+    weight_decay: !!float 1e-4
+  lr_scheduler:
+    warmup_iters: -1  # number of warmup iters (-1 for no warmup)
+    scheduler:
+      type: MultiStepLR
+      step_interval: epoch  # iter or epoch (every iter or every epoch to update once)
+      milestones: [ 32, 44 ]
+      gamma: 0.1
+  loss:
+    num_preds: 1  # number of predicted masks (default 1, when using deep supervision > 1)
+    loss_1:
+      type: SoftIoULoss
+      weight: 1
+      smooth: 1
+      reduction: mean
+    loss_2:
+      type: SufficiencyLoss
+      weight: 0.01
+      temperature: 1
+      reduction: mean
+
+dataset:
+  name: MIST
+  root: ./data/MIST
+  num_inputs: 5
+  img_size: [ 384, 384 ]
+  frame_padding: False
+  data_aug:
+    random_flip: True
+    random_crop: True
+    random_rotation: True
+    color_enhance: False
+    random_peper: False
+
+train:
+  exp_name: MISTNet_MIST
+  batch_size: 16
+  num_workers: 16
+  total_epochs: 48
+  log_interval: 50
+  save_interval: 1
+  val_interval: 1
+  resume:
